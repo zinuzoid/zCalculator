@@ -32,6 +32,9 @@
 /* Exported types ------------------------------------------------------------*/
 extern vu32 _timming;
 
+extern char ConsoleBuffer[150];
+extern vu8 ConsoleReaded;
+
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */

@@ -156,14 +156,28 @@ void SysTick_Handler(void)
 {
 }*/
 
+char ConsoleBuffer[150];
+u8 ConsoleBufferCount=0;
+vu8 ConsoleReaded=0;
 void USART1_IRQHandler(void)
 {
 	if(USART_GetITStatus(USART1,USART_IT_RXNE)==SET)
 	{
+		u8 tmp;
 		USART_ClearITPendingBit(USART1,USART_IT_RXNE);
-		USART_Send_Ch(USART1,USART_ReceiveData(USART1));
+		tmp=USART_ReceiveData(USART1);
+		USART_Send_Ch(USART1,tmp);
+		
+		ConsoleBuffer[ConsoleBufferCount++]=tmp;
+		if(tmp=='\r')
+		{
+			ConsoleBuffer[ConsoleBufferCount]='\0';
+			ConsoleBufferCount=0;
+			ConsoleReaded=1;
+		}
 	}
 }
+
 
 void USART2_IRQHandler(void)
 {

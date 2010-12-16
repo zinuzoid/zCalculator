@@ -1,7 +1,18 @@
+######## #### ##    ## ##     ## ########  #######  #### ########  
+     ##   ##  ###   ## ##     ##      ##  ##     ##  ##  ##     ## 
+    ##    ##  ####  ## ##     ##     ##   ##     ##  ##  ##     ## 
+   ##     ##  ## ## ## ##     ##    ##    ##     ##  ##  ##     ## 
+  ##      ##  ##  #### ##     ##   ##     ##     ##  ##  ##     ## 
+ ##       ##  ##   ### ##     ##  ##      ##     ##  ##  ##     ## 
+######## #### ##    ##  #######  ########  #######  #### ########  
+
 zCalculator
 Calculator Based on STM32-Discovery
 
 in my Real-Time Control project
+base on KEIL uVision 4.03 RealView MDK-ARM 4.11
+
+http://zinuzoid.blogspot.com/2010/12/stm32-discovery.html
 
 contact me zinuzoid@gmail.com
 Jetsada Machom
