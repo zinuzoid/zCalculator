@@ -96,16 +96,62 @@ void newinfix2postfix(char *infix,char *postfix)
 	
 	while(*infix)
 	{
-		push(&st,*infix);
-		infix++;
+		while(*infix==' ')
+			infix++;
+		if(is_digit(*infix))
+		{
+			while(is_digit(*infix))
+			{
+				*postfix=*infix;
+				postfix++;
+				infix++;
+			}
+			*postfix=' ';
+			postfix++;
+		}
+		if(*infix=='(')
+		{
+			push(&st,*infix);
+			infix++;
+		}
+		if(*infix==')')
+		{
+			char tmp=pop(&st);
+			while(tmp!='(')
+			{
+				*postfix=tmp;
+				postfix++;
+				*postfix=' ';
+				postfix++;
+				tmp=pop(&st);
+			}
+			infix++;
+		}
+		if(is_op(*infix))
+		{
+			if(is_stack_empty(&st))
+			{
+				push(&st,*infix);
+			}
+			else
+			{
+				
+			}
+		}
+		
+		
+		//push(&st,*infix);
+		//infix++;
 	}
 	
+	/*
 	while(!is_stack_empty(&st))
 	{
 		char a=pop(&st);
 		*postfix=a+1;
 		postfix++;
 	}
+	*/
 	
 }
 

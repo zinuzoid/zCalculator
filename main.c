@@ -11,16 +11,50 @@
 #include "stm32f10x_it.h"
 #include "calc.h"
 
+#include "task.h"
+
+void testtask(u32 val)
+{
+	USART_Send_Str(USART1,"TESTTASK1:");
+	USART_Send_Ch(USART1,val);
+	USART_Send_Str(USART1,"\r\n");
+}
+
+void testtask2(u32 val)
+{
+	USART_Send_Str(USART1,"TESTTASK2:");
+	USART_Send_Ch(USART1,val);
+	USART_Send_Str(USART1,"\r\n");
+}
+
+TTASK ztask1;
+TTASK ztask2;
+TTASK ztask3;
+
 int main(void)
 {
 	//char a[]="1+9-5*8/4+2*2\0";
-	char a[50]="1+2";
+	char a[50]="1+2 6-7";
 	char b[50];
 	
 	RCCInit();
 	GPIOInit();
 	USARTInit();
 	NVICInit();
+	
+	//////////////////////////////////////////////
+	//task
+	USART_Send_Str(USART1,"\r\n\r\n");
+	
+	TaskInit();
+	TaskCreate(&ztask1,&testtask,'x');
+	TaskCreate(&ztask2,&testtask2,'y');
+	TaskCreate(&ztask3,&testtask2,'z');
+	TaskRun();
+	/////////////////////////////////////////////
+	
+	
+	while(1);
 	
 	newinfix2postfix(a,b);
 	
