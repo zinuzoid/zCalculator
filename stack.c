@@ -1,6 +1,8 @@
 #include <stm32f10x.h>
 
 #include "stack.h"
+#include "usart.h"
+#include "stm32f10x_it.h"
 
 #define	STACK_EMPTY	(s8)-1
 
@@ -21,30 +23,35 @@ void push(struct stack *s,char value)
 {
 	s->top++;
 	s->value[s->top]=value;
-
 }
 
 char pop (struct stack *s)
 {
-	char out;
-	out=s->value[s->top];
-	s->top--;
-	return out;
-}
-
-
-/*
-void stack_display(struct stack s)
-{
-	while(s.top!=STACK_EMPTY)
+	if(!is_stack_empty(s))
 	{
-		LCD_Print_Dec(s.value[s.top]);
-		LCD_Send_Data(' ');
-		s.top--;
+		char out;
+		out=s->value[s->top];
+		s->top--;
+		return out;
+	}
+	else
+	{
+		UsageFault_Handler();
+		return 0;
 	}
 }
-*/
 
+void stack_display(struct stack s)
+{
+	USART_Send_Str(USART1,"\r\n");
+	while(s.top!=STACK_EMPTY)
+	{
+		USART_Send_Ch(USART1,s.value[s.top]);
+		USART_Send_Ch(USART1,' ');
+		s.top--;
+	}
+	USART_Send_Str(USART1,"\r\n");
+}
 
 void empty_stackfloat(struct stackfloat *s)
 {
