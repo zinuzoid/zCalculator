@@ -4,7 +4,7 @@
 
 void _delay_ms(uint32_t time)
 {
-    _timming=time;
-    while(_timming);
+	_timming=time;
+	while(_timming);
 }
 

@@ -1,6 +1,10 @@
 #include <stm32f10x.h>
+#include <stdlib.h>
+
+#include <stdio.h>
 
 #include "stack.h"
+#include "usart.h"
 
 #define CMD_SIN		1
 #define CMD_COS		1
@@ -91,10 +95,10 @@ u8 is_digit(char ch)
 		return 0;
 }
 
-void infix2postfix(char *infix,char *postfix)
+void Infix2Postfix(char *infix,char *postfix)
 {
-	struct stack sym;
-	empty_stack(&sym);
+	struct stack_char sym;
+	empty_stack_char(&sym);
 	
 	while(*infix)
 	{
@@ -113,55 +117,123 @@ void infix2postfix(char *infix,char *postfix)
 		}
 		if(*infix=='(')
 		{
-			push(&sym,*infix);
+			push_char(&sym,*infix);
 			infix++;
 		}
 		if(*infix==')')
 		{
-			char tmp=pop(&sym);
+			char tmp=pop_char(&sym);
 			while(tmp!='(')
 			{
 				*postfix=tmp;
 				postfix++;
 				*postfix=' ';
 				postfix++;
-				tmp=pop(&sym);
+				tmp=pop_char(&sym);
 			}
 			infix++;
 		}
 		if(is_op(*infix))
 		{
-			stack_display(sym);
-			if(is_stack_empty(&sym))
+			if(is_stack_empty_char(&sym))
 			{
-				push(&sym,*infix);
+				push_char(&sym,*infix);
 			}
 			else
 			{
-				char tmp=pop(&sym);
-				while((priority(tmp)>=priority(*infix))&&!is_stack_empty(&sym))
+				char tmp=pop_char(&sym);
+				while((priority(tmp)>=priority(*infix))&&!is_stack_empty_char(&sym))
 				{
 					*postfix=tmp;
 					postfix++;
 					*postfix=' ';
 					postfix++;
-					tmp=pop(&sym);
+					tmp=pop_char(&sym);
 				}
-				push(&sym,tmp);
-				push(&sym,*infix);
+				push_char(&sym,tmp);
+				push_char(&sym,*infix);
 			}
 			infix++;
 		}
 	}
-	while(!is_stack_empty(&sym))
+	while(!is_stack_empty_char(&sym))
 	{
-		char a=pop(&sym);
+		char a=pop_char(&sym);
 		*postfix=a;
 		postfix++;
 		*postfix=' ';
 		postfix++;
 	}
 	*postfix='\0';
+}
+
+
+#define NUMBER_LENGTH_BUFFER	20
+float EvalPostfix(char *postfix)
+{
+	struct stack_float real,imag;
+	empty_stack_float(&real);
+	empty_stack_float(&imag);
+	
+	while(*postfix)
+	{
+		while(*postfix==' ')
+			postfix++;
+		if(is_digit(*postfix))
+		{
+			char buff[NUMBER_LENGTH_BUFFER];
+			char *buffptr=buff;
+			u8 is_real;
+			float value;
+			while(is_digit(*postfix))
+			{
+				*buffptr=*postfix;
+				postfix++;
+				buffptr++;
+			}
+			buffptr--;
+			if(*buffptr=='i')
+			{
+				is_real=0;
+			}
+			else
+			{
+				is_real=1;
+				buffptr++;
+			}
+			*buffptr='\0';
+			value=strtod(buff,NULL);
+			if(is_real)
+			{
+				push_float(&real,value);
+				push_float(&imag,0);
+			}
+			else
+			{
+				push_float(&real,0);
+				push_float(&imag,value);
+			}
+		}
+		else
+			postfix++;
+	}
+	
+	{
+		char buf[20];
+		float value;
+		while(!is_stack_empty_float(&real))
+		{
+			value=pop_float(&real);
+			sprintf(buf,"%f",value);
+			USART_Send_Str(USART1,buf);
+			USART_Send_Str(USART1,"\t");
+			value=pop_float(&imag);
+			sprintf(buf,"%f",value);
+			USART_Send_Str(USART1,buf);
+			USART_Send_Str(USART1,"\r\n");
+		}
+	}
+	return 0;
 }
 
 

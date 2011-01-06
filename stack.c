@@ -4,14 +4,16 @@
 #include "usart.h"
 #include "stm32f10x_it.h"
 
-#define	STACK_EMPTY	(s8)-1
+#define	STACK_EMPTY	(u8)0
 
-void empty_stack(struct stack *s)
+
+//////////////char///////////////
+void empty_stack_char(struct stack_char *s)
 {
 	s->top=STACK_EMPTY;
 }
 
-u8 is_stack_empty(struct stack *s)
+u8 is_stack_empty_char(struct stack_char *s)
 {
 	if(s->top==STACK_EMPTY)
 		return 1;
@@ -19,15 +21,15 @@ u8 is_stack_empty(struct stack *s)
 		return 0;
 }
 
-void push(struct stack *s,char value)
+void push_char(struct stack_char *s,char value)
 {
 	s->top++;
 	s->value[s->top]=value;
 }
 
-char pop (struct stack *s)
+char pop_char(struct stack_char *s)
 {
-	if(!is_stack_empty(s))
+	if(!is_stack_empty_char(s))
 	{
 		char out;
 		out=s->value[s->top];
@@ -40,8 +42,9 @@ char pop (struct stack *s)
 		return 0;
 	}
 }
+//////////////endchar///////////////
 
-void stack_display(struct stack s)
+void stack_display_char(struct stack_char s)
 {
 	USART_Send_Str(USART1,"\r\n");
 	while(s.top!=STACK_EMPTY)
@@ -53,12 +56,14 @@ void stack_display(struct stack s)
 	USART_Send_Str(USART1,"\r\n");
 }
 
-void empty_stackfloat(struct stackfloat *s)
+
+/////////////float/////////////////
+void empty_stack_float(struct stack_float *s)
 {
 	s->top=STACK_EMPTY;
 }
 
-u8 is_stackfloat_empty(struct stackfloat *s)
+u8 is_stack_empty_float(struct stack_float *s)
 {
 	if(s->top==STACK_EMPTY)
 		return 1;
@@ -66,19 +71,27 @@ u8 is_stackfloat_empty(struct stackfloat *s)
 		return 0;
 }
 
-void pushfloat(struct stackfloat *s,float value)
+void push_float(struct stack_float *s,float value)
 {
 	s->top++;
 	s->value[s->top]=value;
 }
 
-float popfloat(struct stackfloat *s)
+float pop_float(struct stack_float *s)
 {
-	float out;
-	out=s->value[s->top];
-	s->top--;
-	return out;
+	if(!is_stack_empty_float(s))
+	{
+		float out;
+		out=s->value[s->top];
+		s->top--;
+		return out;
+	}
+	else
+	{
+		UsageFault_Handler();
+		return 0;
+	}
 }
-
+/////////////endfloat/////////////////
 
 

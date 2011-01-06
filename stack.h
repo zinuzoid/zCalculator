@@ -1,25 +1,27 @@
 #include <stm32f10x.h>
 
-struct stack
+#define	STACK_SIZE	50//max u8
+
+struct stack_char
 {
-	char value[50];
-	s8 top;
+	char value[STACK_SIZE];
+	u8 top;
 };
 
-struct stackfloat
+struct stack_float
 {
-	float value[50];
-	s8 top;
+	float value[STACK_SIZE];
+	u8 top;
 };
 
-void empty_stack(struct stack *s);
-u8 is_stack_empty(struct stack *s);
-void push(struct stack *s,char value);
-char pop (struct stack *s);
-void stack_display(struct stack s);
+void empty_stack_char(struct stack_char *s);
+u8 is_stack_empty_char(struct stack_char *s);
+void push_char(struct stack_char *s,char value);
+char pop_char(struct stack_char *s);
+void stack_display_char(struct stack_char s);
 
-void empty_stackfloat(struct stackfloat *s);
-u8 is_stackfloat_empty(struct stackfloat *s);
-void pushfloat(struct stackfloat *s,float value);
-float popfloat(struct stackfloat *s);
+void empty_stack_float(struct stack_float *s);
+u8 is_stack_empty_float(struct stack_float *s);
+void push_float(struct stack_float *s,float value);
+float pop_float(struct stack_float *s);
 

@@ -22,7 +22,8 @@ int main(void)
 	USARTInit();
 	NVICInit();
 	
-	infix2postfix(a,b);
+	Infix2Postfix(a,b);
+	EvalPostfix(b);
 	
 	USART_Send_Str(USART1,"\r\n\r\n###########");
 	USART_Send_Str(USART1,a);

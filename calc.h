@@ -1,5 +1,5 @@
 
 
-void infix2postfix(char *infix,char *postfix);
-
+void Infix2Postfix(char *infix,char *postfix);
+float EvalPostfix(char *postfix);
 
