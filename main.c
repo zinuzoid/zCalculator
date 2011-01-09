@@ -16,6 +16,9 @@ int main(void)
 {
 	char a[50]="1+2*(99+ 6)+52+18i+9.9*10";
 	char b[50];
+	char sbuf[50];
+	
+	float ans;
 	
 	RCCInit();
 	GPIOInit();
@@ -23,7 +26,7 @@ int main(void)
 	NVICInit();
 	
 	Infix2Postfix(a,b);
-	EvalPostfix(b);
+	EvalPostfix("1 9.7454 +");
 	
 	USART_Send_Str(USART1,"\r\n\r\n###########");
 	USART_Send_Str(USART1,a);

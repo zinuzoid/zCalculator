@@ -167,10 +167,18 @@ void Infix2Postfix(char *infix,char *postfix)
 	*postfix='\0';
 }
 
+#define OP_PLUS		'+'
+#define OP_MINUS	'-'
+#define OP_MUL		'*'
+#define OP_DIV		'/'
+
 
 #define NUMBER_LENGTH_BUFFER	20
 float EvalPostfix(char *postfix)
 {
+	char buf[50];/////////
+	float svalue;//////////
+		
 	struct stack_float real,imag;
 	empty_stack_float(&real);
 	empty_stack_float(&imag);
@@ -214,24 +222,61 @@ float EvalPostfix(char *postfix)
 				push_float(&imag,value);
 			}
 		}
+		else if(is_op(*postfix))
+		{
+			float	real1,
+					real2,
+					imag1,
+					imag2,
+					realresult,
+					imagresult;
+			
+			real1=pop_float(&real);
+			real2=pop_float(&real);
+			imag1=pop_float(&imag);
+			imag2=pop_float(&imag);
+			
+			switch(*postfix)
+			{
+				float divden;
+				case OP_PLUS	:
+					realresult=real1+real2;
+					imagresult=imag1+imag2;
+					break;
+				case OP_MINUS	:
+					realresult=real1-real2;
+					imagresult=imag1-imag2;
+					break;
+				case OP_MUL		:
+					realresult=(real1*real2)-(imag1*imag2);
+					imagresult=(real1*imag2)-(real2*imag1);
+					break;
+				case OP_DIV		:
+					divden=(real2*real2)+(imag2*imag2);
+					realresult=(real1*real2);
+					realresult=realresult/divden;
+					imagresult=(imag1*real2)-(real1*imag2);
+					imagresult=imagresult/divden;
+					break;
+			}
+			push_float(&real,realresult);
+			push_float(&imag,imagresult);
+			postfix++;
+		}
 		else
 			postfix++;
 	}
 	
+	while(!is_stack_empty_float(&real))
 	{
-		char buf[20];
-		float value;
-		while(!is_stack_empty_float(&real))
-		{
-			value=pop_float(&real);
-			sprintf(buf,"%f",value);
-			USART_Send_Str(USART1,buf);
-			USART_Send_Str(USART1,"\t");
-			value=pop_float(&imag);
-			sprintf(buf,"%f",value);
-			USART_Send_Str(USART1,buf);
-			USART_Send_Str(USART1,"\r\n");
-		}
+		svalue=pop_float(&real);
+		sprintf(buf,"%f",svalue);
+		USART_Send_Str(USART1,buf);
+		USART_Send_Str(USART1,"\t");
+		svalue=pop_float(&imag);
+		sprintf(buf,"%f",svalue);
+		USART_Send_Str(USART1,buf);
+		USART_Send_Str(USART1,"\r\n");
 	}
 	return 0;
 }
