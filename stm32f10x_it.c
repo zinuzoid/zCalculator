@@ -163,17 +163,33 @@ void USART1_IRQHandler(void)
 {
 	if(USART_GetITStatus(USART1,USART_IT_RXNE)==SET)
 	{
-		u8 tmp;
+		char utmp;
 		USART_ClearITPendingBit(USART1,USART_IT_RXNE);
-		tmp=USART_ReceiveData(USART1);
-		USART_Send_Ch(USART1,tmp);
+		utmp=USART_ReceiveData(USART1);
 		
-		ConsoleBuffer[ConsoleBufferCount++]=tmp;
-		if(tmp=='\r')
+		ConsoleBuffer[ConsoleBufferCount++]=utmp;
+		if(utmp=='\r')
 		{
+			ConsoleBufferCount--;
 			ConsoleBuffer[ConsoleBufferCount]='\0';
 			ConsoleBufferCount=0;
 			ConsoleReaded=1;
+		}
+		else if(utmp=='\b')//backspace
+		{
+			if(ConsoleBufferCount!=1)
+			{
+				USART_Send_Ch(USART1,'\b');
+				USART_Send_Ch(USART1,' ');
+				USART_Send_Ch(USART1,'\b');
+				ConsoleBufferCount-=2;
+			}
+			else
+				ConsoleBufferCount=0;
+		}
+		else
+		{
+			USART_Send_Ch(USART1,utmp);
 		}
 	}
 }

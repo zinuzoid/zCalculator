@@ -411,14 +411,19 @@
               <FilePath>.\usart.c</FilePath>
             </File>
             <File>
-              <FileName>calc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\calc.c</FilePath>
-            </File>
-            <File>
               <FileName>stack.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\stack.c</FilePath>
+            </File>
+            <File>
+              <FileName>fixparse.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\fixparse.c</FilePath>
+            </File>
+            <File>
+              <FileName>calc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\calc.c</FilePath>
             </File>
           </Files>
         </Group>

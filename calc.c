@@ -1,284 +1,128 @@
 #include <stm32f10x.h>
-#include <stdlib.h>
 
-#include <stdio.h>
+#include <math.h>
 
-#include "stack.h"
-#include "usart.h"
+#define PI 3.1415926536
 
-#define CMD_SIN		1
-#define CMD_COS		1
-#define CMD_TAN		1
-#define CMD_SQRT	1
-#define CMD_LOG		1
-#define CMD_ANS		1
+#define SIN_ITERATION 5
+#define COS_ITERATION 5
+#define EXP_ITERATION 11
 
-#define CMD_DOUBLE	1
-#define CMD_POW		1
-
-u8 priority(char ch)
+//Internal Fn///////////////////////////////
+float int_pow(float base,u8 pow)
 {
-	if(
-		(ch=='*')||
-		(ch=='/')
-		)
-		return 2;
-	else if(
-		(ch=='+')||
-		(ch=='-')
-		)
-		return 1;
-	else
-		return 0;
-}
-
-
-u8 is_alpha(char ch)
-{
-	if(
-		(ch==CMD_SIN)||
-		(ch==CMD_COS)||
-		(ch==CMD_TAN)||
-		(ch==CMD_SQRT)||
-		(ch==CMD_LOG)||
-		(ch==CMD_ANS)
-		)
-		return 1;
-	else
-		return 0;
-}
-
-
-u8 is_postalpha(char ch)
-{
-	if(
-		(ch==CMD_DOUBLE)
-		)
-		return 1;
-	else
-		return 0;
-}
-
-
-u8 is_op(char ch)
-{
-	if(
-		(ch=='+')||
-		(ch=='-')||
-		(ch=='*')||
-		(ch=='/')
-		//(ch==CMD_POW)
-		)
-		return 1;
-	else
-		return 0;
-}
-
-u8 is_digit(char ch)
-{
-	if(
-		(ch=='1')||
-		(ch=='2')||
-		(ch=='3')||
-		(ch=='4')||
-		(ch=='5')||
-		(ch=='6')||
-		(ch=='7')||
-		(ch=='8')||
-		(ch=='9')||
-		(ch=='0')||
-		(ch=='.')||
-		(ch=='i')
-		)
-		return 1;
-	else
-		return 0;
-}
-
-void Infix2Postfix(char *infix,char *postfix)
-{
-	struct stack_char sym;
-	empty_stack_char(&sym);
+	float ans=base;
+	u8 i;
 	
-	while(*infix)
+	if(pow==0)	return 1;
+	
+	for(i=2;i<=pow;i++)
 	{
-		while(*infix==' ')
-			infix++;
-		if(is_digit(*infix))
-		{
-			while(is_digit(*infix))
-			{
-				*postfix=*infix;
-				postfix++;
-				infix++;
-			}
-			*postfix=' ';
-			postfix++;
-		}
-		if(*infix=='(')
-		{
-			push_char(&sym,*infix);
-			infix++;
-		}
-		if(*infix==')')
-		{
-			char tmp=pop_char(&sym);
-			while(tmp!='(')
-			{
-				*postfix=tmp;
-				postfix++;
-				*postfix=' ';
-				postfix++;
-				tmp=pop_char(&sym);
-			}
-			infix++;
-		}
-		if(is_op(*infix))
-		{
-			if(is_stack_empty_char(&sym))
-			{
-				push_char(&sym,*infix);
-			}
-			else
-			{
-				char tmp=pop_char(&sym);
-				while((priority(tmp)>=priority(*infix))&&!is_stack_empty_char(&sym))
-				{
-					*postfix=tmp;
-					postfix++;
-					*postfix=' ';
-					postfix++;
-					tmp=pop_char(&sym);
-				}
-				push_char(&sym,tmp);
-				push_char(&sym,*infix);
-			}
-			infix++;
-		}
+		ans*=base;
 	}
-	while(!is_stack_empty_char(&sym))
-	{
-		char a=pop_char(&sym);
-		*postfix=a;
-		postfix++;
-		*postfix=' ';
-		postfix++;
-	}
-	*postfix='\0';
+	return ans;
 }
 
-#define OP_PLUS		'+'
-#define OP_MINUS	'-'
-#define OP_MUL		'*'
-#define OP_DIV		'/'
-
-
-#define NUMBER_LENGTH_BUFFER	20
-float EvalPostfix(char *postfix)
+float neg_pow(u8 val)
 {
-	char buf[50];/////////
-	float svalue;//////////
+	if(val%2==0)
+		return 1.0;
+	return -1.0;
+}
+
+float fac(u8 n)
+{
+	float ans=1;
+	u8 i;
+	for(i=2;i<=n;i++)
+	{
+		ans*=i;
+	}
+	return ans;
+}
+
+float degtorad(float deg)
+{
+	return deg*0.01745329252;//(PI/180)
+}
+//End Internal Fn///////////////////////////
+
+
+//Trigonometric/////////////////////////////
+float approx_sin(float rad)
+{
+	/*
+	float ans=0;
+	u8 i;
+	for(i=1;i<=SIN_ITERATION;i++)
+	{
+		ans+=neg_pow(i+1)*int_pow(rad,i*2-1)/fac(i*2-1);
 		
-	struct stack_float real,imag;
-	empty_stack_float(&real);
-	empty_stack_float(&imag);
-	
-	while(*postfix)
-	{
-		while(*postfix==' ')
-			postfix++;
-		if(is_digit(*postfix))
-		{
-			char buff[NUMBER_LENGTH_BUFFER];
-			char *buffptr=buff;
-			u8 is_real;
-			float value;
-			while(is_digit(*postfix))
-			{
-				*buffptr=*postfix;
-				postfix++;
-				buffptr++;
-			}
-			buffptr--;
-			if(*buffptr=='i')
-			{
-				is_real=0;
-			}
-			else
-			{
-				is_real=1;
-				buffptr++;
-			}
-			*buffptr='\0';
-			value=strtod(buff,NULL);
-			if(is_real)
-			{
-				push_float(&real,value);
-				push_float(&imag,0);
-			}
-			else
-			{
-				push_float(&real,0);
-				push_float(&imag,value);
-			}
-		}
-		else if(is_op(*postfix))
-		{
-			float	real1,
-					real2,
-					imag1,
-					imag2,
-					realresult,
-					imagresult;
-			
-			real1=pop_float(&real);
-			real2=pop_float(&real);
-			imag1=pop_float(&imag);
-			imag2=pop_float(&imag);
-			
-			switch(*postfix)
-			{
-				float divden;
-				case OP_PLUS	:
-					realresult=real1+real2;
-					imagresult=imag1+imag2;
-					break;
-				case OP_MINUS	:
-					realresult=real1-real2;
-					imagresult=imag1-imag2;
-					break;
-				case OP_MUL		:
-					realresult=(real1*real2)-(imag1*imag2);
-					imagresult=(real1*imag2)-(real2*imag1);
-					break;
-				case OP_DIV		:
-					divden=(real2*real2)+(imag2*imag2);
-					realresult=(real1*real2);
-					realresult=realresult/divden;
-					imagresult=(imag1*real2)-(real1*imag2);
-					imagresult=imagresult/divden;
-					break;
-			}
-			push_float(&real,realresult);
-			push_float(&imag,imagresult);
-			postfix++;
-		}
-		else
-			postfix++;
 	}
-	
-	while(!is_stack_empty_float(&real))
-	{
-		svalue=pop_float(&real);
-		sprintf(buf,"%f",svalue);
-		USART_Send_Str(USART1,buf);
-		USART_Send_Str(USART1,"\t");
-		svalue=pop_float(&imag);
-		sprintf(buf,"%f",svalue);
-		USART_Send_Str(USART1,buf);
-		USART_Send_Str(USART1,"\r\n");
-	}
-	return 0;
+	return ans;
+	*/
+	return sin(rad);
 }
+
+float approx_sind(float deg)
+{
+	return approx_sin(degtorad(deg));
+}
+
+float approx_cos(float rad)
+{
+	/*
+	float ans=1;
+	u8 i;
+	for(i=1;i<=COS_ITERATION-1;i++)
+	{
+		ans+=neg_pow(i)*int_pow(rad,i*2)/fac(i*2);
+		
+	}
+	return ans;
+	*/
+	return cos(rad);
+}
+
+float approx_cosd(float deg)
+{
+	return approx_cos(degtorad(deg));
+}
+//End Trigonometric/////////////////////////
+
+
+//Uncomplete////////////////////////////////
+float approx_exp(float power)
+{
+	/*
+	float ans=1;
+	u8 i;
+	for(i=1;i<=EXP_ITERATION-1;i++)
+	{
+		ans+=int_pow(pow,i)/fac(i);
+	}
+	return ans;
+	*/
+	return exp(power);
+}
+
+float approx_ln(float val)
+{
+	return log(val);
+}
+
+float approx_log(float val)
+{
+	return log10(val);
+}
+
+float approx_pow(float base,float power)
+{
+	return pow(base,power);
+}
+//End Uncomplete////////////////////////////
+
+
+
 
 

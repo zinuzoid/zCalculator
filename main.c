@@ -9,29 +9,30 @@
 #include "init.h"
 #include "usart.h"
 #include "stm32f10x_it.h"
+#include "fixparse.h"
 #include "calc.h"
 
 
 int main(void)
 {
-	char a[50]="1+2*(99+ 6)+52+18i+9.9*10";
-	char b[50];
-	char sbuf[50];
-	
-	float ans;
+	//char a[50]="1+sin(3*4+2)+cos(2-6*2)+10";//1 3 4 * 2 +  s +
+	//char a[50]="1-5-1";
 	
 	RCCInit();
 	GPIOInit();
 	USARTInit();
 	NVICInit();
 	
+	/*
 	Infix2Postfix(a,b);
-	EvalPostfix("1 9.7454 +");
+	
+	EvalPostfix(b);
 	
 	USART_Send_Str(USART1,"\r\n\r\n###########");
 	USART_Send_Str(USART1,a);
 	USART_Send_Str(USART1,"\r\n\r\n");
 	USART_Send_Str(USART1,b);
+	*/
 	
 	SysTick_Config(SystemCoreClock/1000);//ms
 	
@@ -57,30 +58,35 @@ int main(void)
 	{
 		if(ConsoleReaded)
 		{
-			float tmp;
-			char ctmp[50];
+			float realans,imagans;
+			char postfix[50];
+			char sbuf[50];
 			ConsoleReaded=0;
 			
-			tmp=strtof(ConsoleBuffer,NULL);
-			tmp=tmp*1.2;
-			sprintf(ctmp,"%f",tmp);
+			Infix2Postfix(ConsoleBuffer,postfix);
 			
-			USART_Send_Str(USART1,"\r\n");
-			USART_Send_Str(USART1,ctmp);
-			USART_Send_Str(USART1,"\r\n");
+			USART_Send_Str(USART2,postfix);
+			USART_Send_Str(USART2,"\r\n");
+			
+			EvalPostfix(postfix,&realans,&imagans);
+			
+			sprintf(sbuf,"%f",realans);
+			USART_Send_Str(USART1,"\r\n\r\n    ans = ");
+			USART_Send_Str(USART1,sbuf);
+			sprintf(sbuf,"%+f",imagans);
+			USART_Send_Str(USART1,sbuf);
+			USART_Send_Ch(USART1,'i');
+			
+			USART_Send_Str(USART1,"\r\n\r\n");
 			USART_Send_Str(USART1,COMMANDPROMPT);
 			
 			//USART_Send_Ch(USART1,'#');
 			//USART_Send_Str(USART1,ConsoleBuffer);
 		}
-		
 		GPIO_WriteBit(GPIOC,GPIO_Pin_8,(BitAction)(1-GPIO_ReadOutputDataBit(GPIOC,GPIO_Pin_8)));
 		_delay_ms(100);
 		GPIO_WriteBit(GPIOC,GPIO_Pin_9,(BitAction)(1-GPIO_ReadOutputDataBit(GPIOC,GPIO_Pin_9)));
 		_delay_ms(200);
-		
-		//USART_Send_Ch(USART1,'z');
-		//USART_Send_Ch(USART2,'x');
 	}
 }
 

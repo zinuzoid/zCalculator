@@ -1,5 +1,9 @@
 
+float approx_sin(float rad);
+float approx_sind(float deg);
+float approx_cos(float rad);
+float approx_cosd(float deg);
 
-void Infix2Postfix(char *infix,char *postfix);
-float EvalPostfix(char *postfix);
+float approx_exp(float pow);
+
 
