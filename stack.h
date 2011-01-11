@@ -8,9 +8,9 @@ struct stack_char
 	u8 top;
 };
 
-struct stack_float
+struct stack_double
 {
-	float value[STACK_SIZE];
+	double value[STACK_SIZE];
 	u8 top;
 };
 
@@ -20,8 +20,8 @@ void push_char(struct stack_char *s,char value);
 char pop_char(struct stack_char *s);
 void stack_display_char(struct stack_char s);
 
-void empty_stack_float(struct stack_float *s);
-u8 is_stack_empty_float(struct stack_float *s);
-void push_float(struct stack_float *s,float value);
-float pop_float(struct stack_float *s);
+void empty_stack_double(struct stack_double *s);
+u8 is_stack_empty_double(struct stack_double *s);
+void push_double(struct stack_double *s,double value);
+double pop_double(struct stack_double *s);
 

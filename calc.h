@@ -1,9 +1,9 @@
 
-float approx_sin(float rad);
-float approx_sind(float deg);
-float approx_cos(float rad);
-float approx_cosd(float deg);
+double approx_sin(double rad);
+double approx_sind(double deg);
+double approx_cos(double rad);
+double approx_cosd(double deg);
 
-float approx_exp(float pow);
+double approx_exp(double pow);
 
 

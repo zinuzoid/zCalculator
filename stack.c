@@ -57,13 +57,13 @@ void stack_display_char(struct stack_char s)
 }
 
 
-/////////////float/////////////////
-void empty_stack_float(struct stack_float *s)
+/////////////double////////////////
+void empty_stack_double(struct stack_double *s)
 {
 	s->top=STACK_EMPTY;
 }
 
-u8 is_stack_empty_float(struct stack_float *s)
+u8 is_stack_empty_double(struct stack_double *s)
 {
 	if(s->top==STACK_EMPTY)
 		return 1;
@@ -71,17 +71,17 @@ u8 is_stack_empty_float(struct stack_float *s)
 		return 0;
 }
 
-void push_float(struct stack_float *s,float value)
+void push_double(struct stack_double *s,double value)
 {
 	s->top++;
 	s->value[s->top]=value;
 }
 
-float pop_float(struct stack_float *s)
+double pop_double(struct stack_double *s)
 {
-	if(!is_stack_empty_float(s))
+	if(!is_stack_empty_double(s))
 	{
-		float out;
+		double out;
 		out=s->value[s->top];
 		s->top--;
 		return out;
@@ -92,6 +92,6 @@ float pop_float(struct stack_float *s)
 		return 0;
 	}
 }
-/////////////endfloat/////////////////
+/////////////enddouble////////////////
 
 

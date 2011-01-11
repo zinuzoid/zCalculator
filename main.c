@@ -36,7 +36,7 @@ int main(void)
 	
 	SysTick_Config(SystemCoreClock/1000);//ms
 	
-	USART_Send_Str(USART1,"\r\n");
+	USART_Send_Ch(USART1,'\f');
 	
 	USART_Send_Str(USART1,WELCOMETEXT1);
 	USART_Send_Str(USART1,WELCOMETEXT2);
@@ -58,7 +58,7 @@ int main(void)
 	{
 		if(ConsoleReaded)
 		{
-			float realans,imagans;
+			double realans,imagans;
 			char postfix[50];
 			char sbuf[50];
 			ConsoleReaded=0;

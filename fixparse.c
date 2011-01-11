@@ -265,14 +265,14 @@ void Infix2Postfix(char *infix,char *postfix)
 
 
 #define NUMBER_LENGTH_BUFFER	20
-float EvalPostfix(char *postfix,float *realans,float *imagans)
+void EvalPostfix(char *postfix,double *realans,double *imagans)
 {
 	//char buf[50];/////////
-	float svalue;//////////
+	double svalue;//////////
 		
-	struct stack_float real,imag;
-	empty_stack_float(&real);
-	empty_stack_float(&imag);
+	struct stack_double real,imag;
+	empty_stack_double(&real);
+	empty_stack_double(&imag);
 	
 	while(*postfix)
 	{
@@ -283,7 +283,7 @@ float EvalPostfix(char *postfix,float *realans,float *imagans)
 			char buff[NUMBER_LENGTH_BUFFER];
 			char *buffptr=buff;
 			u8 is_real;
-			float value=0;
+			double value=0;
 			while(is_digit(*postfix))
 			{
 				*buffptr=*postfix;
@@ -305,32 +305,32 @@ float EvalPostfix(char *postfix,float *realans,float *imagans)
 			if(value==0)	value=strtod(buff,NULL);
 			if(is_real)
 			{
-				push_float(&real,value);
-				push_float(&imag,0);
+				push_double(&real,value);
+				push_double(&imag,0);
 			}
 			else
 			{
-				push_float(&real,0);
-				push_float(&imag,value);
+				push_double(&real,0);
+				push_double(&imag,value);
 			}
 		}
 		else if(is_op(*postfix))
 		{
-			float	real1,
+			double	real1,
 					real2,
 					imag1,
 					imag2,
 					realresult=0,
 					imagresult=0;
 			
-			real1=pop_float(&real);
-			real2=pop_float(&real);
-			imag1=pop_float(&imag);
-			imag2=pop_float(&imag);
+			real1=pop_double(&real);
+			real2=pop_double(&real);
+			imag1=pop_double(&imag);
+			imag2=pop_double(&imag);
 			
 			switch(*postfix)
 			{
-				float divden;
+				double divden;
 				case OP_PLUS	:
 					realresult=real1+real2;
 					imagresult=imag1+imag2;
@@ -351,19 +351,19 @@ float EvalPostfix(char *postfix,float *realans,float *imagans)
 					imagresult=imagresult/divden;
 					break;
 			}
-			push_float(&real,realresult);
-			push_float(&imag,imagresult);
+			push_double(&real,realresult);
+			push_double(&imag,imagresult);
 			postfix++;
 		}
 		else if(is_prealpha(*postfix))
 		{
-			float	real1,
+			double	real1,
 					//imag1,
 					realresult=0;
 					//imagresult;
 					
-			real1=pop_float(&real);
-			//imag1=pop_float(&imag);
+			real1=pop_double(&real);
+			//imag1=pop_double(&imag);
 			
 			switch(*postfix)
 			{
@@ -383,7 +383,7 @@ float EvalPostfix(char *postfix,float *realans,float *imagans)
 					realresult=approx_sin(real1);
 					break;
 			}
-			push_float(&real,realresult);
+			push_double(&real,realresult);
 			postfix++;
 		}
 		else if(*postfix)
@@ -392,20 +392,19 @@ float EvalPostfix(char *postfix,float *realans,float *imagans)
 		}
 	}
 	
-	while(!is_stack_empty_float(&real))
+	while(!is_stack_empty_double(&real))
 	{
-		svalue=pop_float(&real);
+		svalue=pop_double(&real);
 		*realans=svalue;
 		//sprintf(buf,"%f",svalue);
 		//USART_Send_Str(USART1,buf);
 		//USART_Send_Str(USART1,"\t");
-		svalue=pop_float(&imag);
+		svalue=pop_double(&imag);
 		*imagans=svalue;
 		//sprintf(buf,"%f",svalue);
 		//USART_Send_Str(USART1,buf);
 		//USART_Send_Str(USART1,"i\r\n");
 	}
-	return 0;
 }
 
 

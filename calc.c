@@ -9,9 +9,9 @@
 #define EXP_ITERATION 11
 
 //Internal Fn///////////////////////////////
-float int_pow(float base,u8 pow)
+double int_pow(double base,u8 pow)
 {
-	float ans=base;
+	double ans=base;
 	u8 i;
 	
 	if(pow==0)	return 1;
@@ -23,16 +23,16 @@ float int_pow(float base,u8 pow)
 	return ans;
 }
 
-float neg_pow(u8 val)
+double neg_pow(u8 val)
 {
 	if(val%2==0)
 		return 1.0;
 	return -1.0;
 }
 
-float fac(u8 n)
+double fac(u8 n)
 {
-	float ans=1;
+	double ans=1;
 	u8 i;
 	for(i=2;i<=n;i++)
 	{
@@ -41,7 +41,7 @@ float fac(u8 n)
 	return ans;
 }
 
-float degtorad(float deg)
+double degtorad(double deg)
 {
 	return deg*0.01745329252;//(PI/180)
 }
@@ -49,10 +49,10 @@ float degtorad(float deg)
 
 
 //Trigonometric/////////////////////////////
-float approx_sin(float rad)
+double approx_sin(double rad)
 {
 	/*
-	float ans=0;
+	double ans=0;
 	u8 i;
 	for(i=1;i<=SIN_ITERATION;i++)
 	{
@@ -64,15 +64,15 @@ float approx_sin(float rad)
 	return sin(rad);
 }
 
-float approx_sind(float deg)
+double approx_sind(double deg)
 {
 	return approx_sin(degtorad(deg));
 }
 
-float approx_cos(float rad)
+double approx_cos(double rad)
 {
 	/*
-	float ans=1;
+	double ans=1;
 	u8 i;
 	for(i=1;i<=COS_ITERATION-1;i++)
 	{
@@ -84,7 +84,7 @@ float approx_cos(float rad)
 	return cos(rad);
 }
 
-float approx_cosd(float deg)
+double approx_cosd(double deg)
 {
 	return approx_cos(degtorad(deg));
 }
@@ -92,10 +92,10 @@ float approx_cosd(float deg)
 
 
 //Uncomplete////////////////////////////////
-float approx_exp(float power)
+double approx_exp(double power)
 {
 	/*
-	float ans=1;
+	double ans=1;
 	u8 i;
 	for(i=1;i<=EXP_ITERATION-1;i++)
 	{
@@ -106,17 +106,17 @@ float approx_exp(float power)
 	return exp(power);
 }
 
-float approx_ln(float val)
+double approx_ln(double val)
 {
 	return log(val);
 }
 
-float approx_log(float val)
+double approx_log(double val)
 {
 	return log10(val);
 }
 
-float approx_pow(float base,float power)
+double approx_pow(double base,double power)
 {
 	return pow(base,power);
 }
