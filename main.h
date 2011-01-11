@@ -1,4 +1,12 @@
-	
+/*------------------------------------------------------------------------------------------------
+** Program 	:	main.h
+** Project	:	Realtime
+** CPU		:	STM32F100
+** Date		:	12/1/2011
+** Modify	:	Jetsada Machom <Zinuzoid Corporation Co.,Ltd.>
+** Copyright:	
+** Note 	:	
+------------------------------------------------------------------------------------------------*/
 	
 #define	WELCOMETEXT1	"      ___          _                  _           _                \r\n"
 #define	WELCOMETEXT2	"     (  _`\\       (_ )               (_ )        ( )_              \r\n"
