@@ -26,6 +26,7 @@ double approx_ln(double val);
 void approx_lni(double real,double imag,double *realans,double *imagans);
 double approx_pow(double base,double power);
 double approx_sqrt(double val);
+void approx_sqrti(double val,double *realans,double *imagans);
 
 double zmodf(double val,double div);
 

@@ -261,6 +261,22 @@ double approx_sqrt(double val)
 	return approx_pow(val,0.5);
 }
 
+void approx_sqrti(double val,double *realans,double *imagans)
+{
+	double result;
+	result=approx_pow(zabsf(val),0.5);
+	if(val>=0)
+	{
+		*realans=result;
+		*imagans=0;
+	}
+	else
+	{
+		*realans=0;
+		*imagans=result;
+	}
+}
+
 double approx_exp(double power)
 {
 	u8 i;

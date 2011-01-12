@@ -25,7 +25,7 @@
 
 int main(void)
 {
-	double aa=approx_sqrt(-2);
+	//double aa=approx_sqrt(-2);
 	
 	RCCInit();
 	GPIOInit();
