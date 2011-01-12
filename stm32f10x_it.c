@@ -167,7 +167,9 @@ void SysTick_Handler(void)
 }*/
 
 char ConsoleBuffer[150];
+char LastConsoleBuffer[150];
 u8 ConsoleBufferCount=0;
+u8 LastConsoleBufferCount=0;
 vu8 ConsoleReaded=0;
 void USART1_IRQHandler(void)
 {
@@ -183,6 +185,18 @@ void USART1_IRQHandler(void)
 			ConsoleBufferCount--;
 			ConsoleBuffer[ConsoleBufferCount]='\0';
 			ConsoleBufferCount=0;
+			
+			LastConsoleBufferCount=0;
+			while(ConsoleBuffer[ConsoleBufferCount])
+			{
+				LastConsoleBuffer[LastConsoleBufferCount]=ConsoleBuffer[ConsoleBufferCount];
+				LastConsoleBufferCount++;
+				ConsoleBufferCount++;
+			}
+			LastConsoleBuffer[LastConsoleBufferCount]='\0';
+			
+			ConsoleBufferCount=0;
+
 			ConsoleReaded=1;
 		}
 		else if(utmp=='\b')//backspace
@@ -196,6 +210,18 @@ void USART1_IRQHandler(void)
 			}
 			else
 				ConsoleBufferCount=0;
+		}
+		else if(utmp=='\t')//history
+		{
+			ConsoleBufferCount=0;
+			LastConsoleBufferCount=0;
+			while(LastConsoleBuffer[LastConsoleBufferCount])
+			{
+				ConsoleBuffer[ConsoleBufferCount]=LastConsoleBuffer[LastConsoleBufferCount];
+				ConsoleBufferCount++;
+				LastConsoleBufferCount++;
+			}
+			USART_Send_Str(USART1,LastConsoleBuffer);
 		}
 		else
 		{

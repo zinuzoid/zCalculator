@@ -151,7 +151,7 @@
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>*infix</ItemText>
+          <ItemText>*infix,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
@@ -172,10 +172,17 @@
       <MemoryWindow1>
         <Mm>
           <WinNumber>1</WinNumber>
-          <SubType>0</SubType>
-          <ItemText>&amp;aaa</ItemText>
+          <SubType>256</SubType>
+          <ItemText>LastConsoleBuffer</ItemText>
         </Mm>
       </MemoryWindow1>
+      <MemoryWindow2>
+        <Mm>
+          <WinNumber>2</WinNumber>
+          <SubType>256</SubType>
+          <ItemText>postfix</ItemText>
+        </Mm>
+      </MemoryWindow2>
       <DebugFlag>
         <trace>0</trace>
         <periodic>1</periodic>
@@ -218,10 +225,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>1</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>4</TopLine>
-      <CurrentLine>27</CurrentLine>
+      <TopLine>18</TopLine>
+      <CurrentLine>34</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\main.c</PathWithFileName>
       <FilenameWithoutPath>main.c</FilenameWithoutPath>
@@ -232,10 +239,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>14</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>1</TopLine>
-      <CurrentLine>18</CurrentLine>
+      <CurrentLine>7</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\delay.c</PathWithFileName>
       <FilenameWithoutPath>delay.c</FilenameWithoutPath>
@@ -246,10 +253,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>4</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>100</TopLine>
-      <CurrentLine>109</CurrentLine>
+      <TopLine>198</TopLine>
+      <CurrentLine>223</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\stm32f10x_it.c</PathWithFileName>
       <FilenameWithoutPath>stm32f10x_it.c</FilenameWithoutPath>
@@ -288,10 +295,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>19</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>79</TopLine>
+      <CurrentLine>88</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\stack.c</PathWithFileName>
       <FilenameWithoutPath>stack.c</FilenameWithoutPath>
@@ -304,8 +311,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>407</TopLine>
-      <CurrentLine>433</CurrentLine>
+      <TopLine>223</TopLine>
+      <CurrentLine>232</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\fixparse.c</PathWithFileName>
       <FilenameWithoutPath>fixparse.c</FilenameWithoutPath>
@@ -314,12 +321,12 @@
       <GroupNumber>1</GroupNumber>
       <FileNumber>8</FileNumber>
       <FileType>1</FileType>
-      <tvExp>0</tvExp>
+      <tvExp>1</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>48</ColumnNumber>
+      <ColumnNumber>6</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>124</TopLine>
-      <CurrentLine>144</CurrentLine>
+      <TopLine>210</TopLine>
+      <CurrentLine>210</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\calc.c</PathWithFileName>
       <FilenameWithoutPath>calc.c</FilenameWithoutPath>
@@ -374,8 +381,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>147</TopLine>
+      <CurrentLine>147</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\STM32F10x_StdPeriph_Lib_V3.4.0\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\arm\startup_stm32f10x_md_vl.s</PathWithFileName>
       <FilenameWithoutPath>startup_stm32f10x_md_vl.s</FilenameWithoutPath>
@@ -448,33 +455,7 @@
   <AlienFiles>
     <PathWithFilename>E:\Work\STM32\Research\zCalculator\calc.h</PathWithFilename>
     <TopLine>1</TopLine>
-    <CurrentLine>22</CurrentLine>
-    <Constant>0</Constant>
-    <WindowPosition>
-      <length>0</length>
-      <flags>0</flags>
-      <showCmd>0</showCmd>
-      <MinPosition>
-        <xPos>0</xPos>
-        <yPos>0</yPos>
-      </MinPosition>
-      <MaxPosition>
-        <xPos>0</xPos>
-        <yPos>0</yPos>
-      </MaxPosition>
-      <NormalPosition>
-        <Top>0</Top>
-        <Left>0</Left>
-        <Right>0</Right>
-        <Bottom>0</Bottom>
-      </NormalPosition>
-    </WindowPosition>
-  </AlienFiles>
-
-  <AlienFiles>
-    <PathWithFilename>C:\Keil\ARM\RV31\INC\math.h</PathWithFilename>
-    <TopLine>285</TopLine>
-    <CurrentLine>308</CurrentLine>
+    <CurrentLine>29</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -543,9 +524,9 @@
         <DockLocation>3</DockLocation>
         <Pinned>0</Pinned>
         <DockedRect_top>24</DockedRect_top>
-        <DockedRect_left>1</DockedRect_left>
+        <DockedRect_left>6</DockedRect_left>
         <DockedRect_bottom>50</DockedRect_bottom>
-        <DockedRect_right>894</DockedRect_right>
+        <DockedRect_right>899</DockedRect_right>
         <FloatingRect_top>0</FloatingRect_top>
         <FloatingRect_left>0</FloatingRect_left>
         <FloatingRect_bottom>0</FloatingRect_bottom>
@@ -876,7 +857,7 @@
         <FloatingRect_bottom>600</FloatingRect_bottom>
         <FloatingRect_right>250</FloatingRect_right>
         <ContainerPercent>50</ContainerPercent>
-        <ActiveTab>1</ActiveTab>
+        <ActiveTab>0</ActiveTab>
         <Visible>1</Visible>
         <Dynamic>0</Dynamic>
       </Window>
@@ -931,9 +912,9 @@
         <Dynamic>0</Dynamic>
       </Window>
       <Window>
-        <WinId>1466</WinId>
+        <WinId>1465</WinId>
         <ItemNo>18</ItemNo>
-        <Name>Memory 2</Name>
+        <Name>Memory 1</Name>
         <AnchorWinID>1936</AnchorWinID>
         <AnchorWinName>Watch 1</AnchorWinName>
         <OtherWinID>197</OtherWinID>
@@ -951,16 +932,16 @@
         <FloatingRect_bottom>600</FloatingRect_bottom>
         <FloatingRect_right>250</FloatingRect_right>
         <ContainerPercent>50</ContainerPercent>
-        <ActiveTab>0</ActiveTab>
-        <Visible>0</Visible>
+        <ActiveTab>1</ActiveTab>
+        <Visible>1</Visible>
         <Dynamic>0</Dynamic>
       </Window>
       <Window>
         <WinId>1467</WinId>
         <ItemNo>19</ItemNo>
         <Name>Memory 3</Name>
-        <AnchorWinID>1466</AnchorWinID>
-        <AnchorWinName>Memory 2</AnchorWinName>
+        <AnchorWinID>1465</AnchorWinID>
+        <AnchorWinName>Memory 1</AnchorWinName>
         <OtherWinID>197</OtherWinID>
         <OtherWinName>Build Output</OtherWinName>
         <WinType>1</WinType>
@@ -1006,9 +987,9 @@
         <Dynamic>0</Dynamic>
       </Window>
       <Window>
-        <WinId>1465</WinId>
+        <WinId>1466</WinId>
         <ItemNo>21</ItemNo>
-        <Name>Memory 1</Name>
+        <Name>Memory 2</Name>
         <AnchorWinID>1468</AnchorWinID>
         <AnchorWinName>Memory 4</AnchorWinName>
         <OtherWinID>197</OtherWinID>
@@ -1034,8 +1015,8 @@
         <WinId>1506</WinId>
         <ItemNo>22</ItemNo>
         <Name>Symbols</Name>
-        <AnchorWinID>1465</AnchorWinID>
-        <AnchorWinName>Memory 1</AnchorWinName>
+        <AnchorWinID>1466</AnchorWinID>
+        <AnchorWinName>Memory 2</AnchorWinName>
         <OtherWinID>197</OtherWinID>
         <OtherWinName>Build Output</OtherWinName>
         <WinType>1</WinType>
@@ -1838,49 +1819,49 @@
     <ActiveMDIGroup>0</ActiveMDIGroup>
     <MDIGroup>
       <Size>100</Size>
-      <ActiveTab>0</ActiveTab>
+      <ActiveTab>4</ActiveTab>
       <Documents>
         <Doc>
           <Name>.\main.c</Name>
-          <ColumnNumber>22</ColumnNumber>
-          <TopLine>4</TopLine>
-          <CurrentLine>29</CurrentLine>
+          <ColumnNumber>1</ColumnNumber>
+          <TopLine>18</TopLine>
+          <CurrentLine>34</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\fixparse.c</Name>
           <ColumnNumber>0</ColumnNumber>
-          <TopLine>407</TopLine>
-          <CurrentLine>433</CurrentLine>
+          <TopLine>223</TopLine>
+          <CurrentLine>232</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\calc.c</Name>
-          <ColumnNumber>48</ColumnNumber>
-          <TopLine>124</TopLine>
-          <CurrentLine>144</CurrentLine>
+          <ColumnNumber>6</ColumnNumber>
+          <TopLine>210</TopLine>
+          <CurrentLine>210</CurrentLine>
         </Doc>
         <Doc>
           <Name>calc.h</Name>
-          <ColumnNumber>73</ColumnNumber>
+          <ColumnNumber>4</ColumnNumber>
           <TopLine>1</TopLine>
-          <CurrentLine>22</CurrentLine>
-        </Doc>
-        <Doc>
-          <Name>.\stm32f10x_it.c</Name>
-          <ColumnNumber>0</ColumnNumber>
-          <TopLine>100</TopLine>
-          <CurrentLine>109</CurrentLine>
+          <CurrentLine>29</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\delay.c</Name>
-          <ColumnNumber>0</ColumnNumber>
+          <ColumnNumber>14</ColumnNumber>
           <TopLine>1</TopLine>
-          <CurrentLine>18</CurrentLine>
+          <CurrentLine>7</CurrentLine>
         </Doc>
         <Doc>
-          <Name>C:\Keil\ARM\RV31\INC\math.h</Name>
-          <ColumnNumber>40</ColumnNumber>
-          <TopLine>285</TopLine>
-          <CurrentLine>308</CurrentLine>
+          <Name>.\stack.c</Name>
+          <ColumnNumber>0</ColumnNumber>
+          <TopLine>79</TopLine>
+          <CurrentLine>88</CurrentLine>
+        </Doc>
+        <Doc>
+          <Name>.\stm32f10x_it.c</Name>
+          <ColumnNumber>4</ColumnNumber>
+          <TopLine>198</TopLine>
+          <CurrentLine>223</CurrentLine>
         </Doc>
       </Documents>
     </MDIGroup>

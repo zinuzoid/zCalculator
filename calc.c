@@ -201,6 +201,7 @@ double approx_atan(double val)
 	if(x<0.4375)
 	{
 		id=4;
+		y=x;
 	}
 	else if(x<0.6875)
 	{
@@ -325,7 +326,7 @@ double approx_ln(double val)
 {
 	//use Newton-Raphson
 	double y0,y1,ey;
-	u8 count;
+	u8 count=0;
 	
 	y0=0;
 	y1=1;
