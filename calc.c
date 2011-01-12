@@ -98,6 +98,16 @@ double approx_cosd(double deg)
 {
 	return approx_cos(degtorad(deg));
 }
+
+double approx_tan(double rad)
+{
+	return tan(rad);
+}
+
+double approx_tand(double deg)
+{
+	return approx_tan(degtorad(deg));
+}
 //End Trigonometric/////////////////////////
 
 
@@ -116,9 +126,23 @@ double approx_exp(double power)
 	return exp(power);
 }
 
+void approx_expi(double real,double imag,double *realans,double *imagans)
+{
+	double mul;
+	mul=exp(real);
+	*realans=mul*approx_cos(imag);
+	*imagans=mul*approx_sin(imag);
+}
+
 double approx_ln(double val)
 {
 	return log(val);
+}
+
+void approx_lni(double real,double imag,double *realans,double *imagans)
+{
+	*realans=approx_ln(sqrt(real*real+imag*imag));	//////still use math.h
+	*imagans=atan(imag/real);						//////still use math.h
 }
 
 double approx_log(double val)

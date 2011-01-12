@@ -36,11 +36,17 @@
 #define CMD_LN1		'l'
 #define CMD_LN2		'n'
 
+#define CMD_EXP1	'e'
+#define CMD_EXP2	'x'
+#define CMD_EXP3	'p'
+
 #define OP_SIN		's'
 #define OP_COS		'c'
 #define OP_TAN		't'
 #define OP_LOG		'l'
 #define OP_LN		'n'
+#define OP_EXP		'e'
+
 #define CMD_SQRT	1
 #define CMD_ANS		1
 
@@ -57,7 +63,10 @@ u8 priority(char ch)
 	if(
 		(ch==OP_SIN)||
 		(ch==OP_COS)||
-		(ch==OP_TAN)
+		(ch==OP_TAN)||
+		(ch==OP_LOG)||
+		(ch==OP_LN)||
+		(ch==OP_EXP)
 		)
 		return 3;
 	else if(
@@ -82,6 +91,8 @@ u8 is_prealpha(char ch)
 		(ch==CMD_COS1)||
 		(ch==CMD_TAN1)||
 		(ch==CMD_LOG1)||
+		(ch==CMD_LN1)||
+		(ch==CMD_EXP1)||
 		(ch==CMD_ANS)
 		)
 		return 1;
@@ -89,6 +100,20 @@ u8 is_prealpha(char ch)
 		return 0;
 }
 
+u8 is_prealphaop(char ch)
+{
+	if(
+		(ch==OP_SIN)||
+		(ch==OP_COS)||
+		(ch==OP_TAN)||
+		(ch==OP_LOG)||
+		(ch==OP_LN)||
+		(ch==OP_EXP)
+		)
+		return 1;
+	else
+		return 0;
+}
 
 u8 is_postalpha(char ch)
 {
@@ -114,11 +139,10 @@ u8 is_alpha(char ch)
 u8 is_op(char ch)
 {
 	if(
-		(ch=='+')||
-		(ch=='-')||
-		(ch=='*')||
-		(ch=='/')
-		//(ch==CMD_POW)
+		(ch==OP_PLUS)||
+		(ch==OP_MINUS)||
+		(ch==OP_MUL)||
+		(ch==OP_DIV)
 		)
 		return 1;
 	else
@@ -191,7 +215,14 @@ void Infix2Postfix(char *infix,char *postfix)
 				ptr++;
 			if((ptr-infix)==2)
 			{
-				
+				if(
+					(*infix==CMD_LN1)&&
+					(*(infix+1)==CMD_LN2)
+					)
+				{
+					infix+=1;
+					*infix=OP_LN;
+				}
 			}
 			else if((ptr-infix)==3)
 			{
@@ -231,12 +262,21 @@ void Infix2Postfix(char *infix,char *postfix)
 					infix+=2;
 					*infix=OP_LOG;
 				}
+				else if(
+					(*infix==CMD_EXP1)&&
+					(*(infix+1)==CMD_EXP2)&&
+					(*(infix+2)==CMD_EXP3)
+					)
+				{
+					infix+=2;
+					*infix=OP_EXP;
+				}
 			}
 			else
 			{
 			}
 		}
-		if(is_op(*infix)||is_prealpha(*infix))
+		if(is_op(*infix)||is_prealphaop(*infix))
 		{
 			if(is_stack_empty_char(&sym))
 			{
@@ -365,15 +405,15 @@ void EvalPostfix(char *postfix,double *realans,double *imagans)
 			push_double(&imag,imagresult);
 			postfix++;
 		}
-		else if(is_prealpha(*postfix))
+		else if(is_prealphaop(*postfix))
 		{
 			double	real1,
-					//imag1,
-					realresult=0;
-					//imagresult;
+					imag1,
+					realresult=0,
+					imagresult=0;
 					
 			real1=pop_double(&real);
-			//imag1=pop_double(&imag);
+			imag1=pop_double(&imag);
 			
 			switch(*postfix)
 			{
@@ -384,16 +424,20 @@ void EvalPostfix(char *postfix,double *realans,double *imagans)
 					realresult=approx_cos(real1);
 					break;
 				case OP_TAN		:
-					realresult=approx_sin(real1)/approx_cos(real1);
+					realresult=approx_tan(real1);
 					break;
 				case OP_LOG		:
-					realresult=approx_sin(real1);
+					realresult=approx_log(real1);
 					break;
 				case OP_LN		:
-					realresult=approx_sin(real1);
+					approx_lni(real1,imag1,&realresult,&imagresult);
+					break;
+				case OP_EXP		:
+					approx_expi(real1,imag1,&realresult,&imagresult);
 					break;
 			}
 			push_double(&real,realresult);
+			push_double(&imag,imagresult);
 			postfix++;
 		}
 		else if(*postfix)

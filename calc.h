@@ -12,7 +12,14 @@ double approx_sin(double rad);
 double approx_sind(double deg);
 double approx_cos(double rad);
 double approx_cosd(double deg);
+double approx_tan(double rad);
+double approx_tand(double deg);
 
 double approx_exp(double pow);
+void approx_expi(double real,double imag,double *realans,double *imagans);
+double approx_log(double val);
+double approx_ln(double val);
+void approx_lni(double real,double imag,double *realans,double *imagans);
+double approx_pow(double base,double power);
 
 
