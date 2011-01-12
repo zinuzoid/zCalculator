@@ -427,7 +427,7 @@ void EvalPostfix(char *postfix,double *realans,double *imagans)
 					realresult=approx_tan(real1);
 					break;
 				case OP_LOG		:
-					realresult=approx_log(real1);
+					approx_logi(real1,imag1,&realresult,&imagresult);
 					break;
 				case OP_LN		:
 					approx_lni(real1,imag1,&realresult,&imagresult);

@@ -25,24 +25,12 @@
 
 int main(void)
 {
-	//char a[50]="1+sin(3*4+2)+cos(2-6*2)+10";//1 3 4 * 2 +  s +
-	//char a[50]="1-5-1";
+	double aa=approx_sqrt(-2);
 	
 	RCCInit();
 	GPIOInit();
 	USARTInit();
 	NVICInit();
-	
-	/*
-	Infix2Postfix(a,b);
-	
-	EvalPostfix(b);
-	
-	USART_Send_Str(USART1,"\r\n\r\n###########");
-	USART_Send_Str(USART1,a);
-	USART_Send_Str(USART1,"\r\n\r\n");
-	USART_Send_Str(USART1,b);
-	*/
 	
 	SysTick_Config(SystemCoreClock/1000);//ms
 	
