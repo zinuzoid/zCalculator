@@ -25,8 +25,6 @@
 
 int main(void)
 {
-	//double aa=approx_sqrt(-2);
-	
 	RCCInit();
 	GPIOInit();
 	USARTInit();
@@ -61,25 +59,55 @@ int main(void)
 			char sbuf[50];
 			ConsoleReaded=0;
 			
-			Infix2Postfix(ConsoleBuffer,postfix);
-			
-			USART_Send_Str(USART2,postfix);
-			USART_Send_Str(USART2,"\r\n");
-			
-			EvalPostfix(postfix,&realans,&imagans);
-			
-			sprintf(sbuf,"%f",realans);
-			USART_Send_Str(USART1,"\r\n\r\n    ans = ");
-			USART_Send_Str(USART1,sbuf);
-			sprintf(sbuf,"%+f",imagans);
-			USART_Send_Str(USART1,sbuf);
-			USART_Send_Ch(USART1,'i');
-			
-			USART_Send_Str(USART1,"\r\n\r\n");
-			USART_Send_Str(USART1,COMMANDPROMPT);
-			
-			//USART_Send_Ch(USART1,'#');
-			//USART_Send_Str(USART1,ConsoleBuffer);
+			if(
+				(*(ConsoleBuffer)=='h')&&
+				(*(ConsoleBuffer+1)=='e')&&
+				(*(ConsoleBuffer+2)=='l')&&
+				(*(ConsoleBuffer+3)=='p')
+				)
+			{
+				USART_Send_Str(USART1,"\r\n");
+				USART_Send_Str(USART1,"\r\n");
+				USART_Send_Str(USART1,HELPTEXT1);
+				USART_Send_Str(USART1,HELPTEXT2);
+				USART_Send_Str(USART1,HELPTEXT3);
+				USART_Send_Str(USART1,HELPTEXT4);
+				USART_Send_Str(USART1,HELPTEXT5);
+				USART_Send_Str(USART1,HELPTEXT6);
+				USART_Send_Str(USART1,HELPTEXT7);
+				USART_Send_Str(USART1,HELPTEXT8);
+				USART_Send_Str(USART1,HELPTEXT9);
+				USART_Send_Str(USART1,HELPTEXT10);
+				USART_Send_Str(USART1,HELPTEXT11);
+				USART_Send_Str(USART1,HELPTEXT12);
+				USART_Send_Str(USART1,HELPTEXT13);
+				USART_Send_Str(USART1,HELPTEXT14);
+				USART_Send_Str(USART1,HELPTEXT15);
+				USART_Send_Str(USART1,HELPTEXT16);
+				USART_Send_Str(USART1,HELPTEXT17);
+				USART_Send_Str(USART1,HELPTEXT18);
+				USART_Send_Str(USART1,"\r\n");
+				USART_Send_Str(USART1,COMMANDPROMPT);
+			}
+			else
+			{
+				Infix2Postfix(ConsoleBuffer,postfix);
+				
+				USART_Send_Str(USART2,postfix);
+				USART_Send_Str(USART2,"\r\n");
+				
+				EvalPostfix(postfix,&realans,&imagans);
+				
+				sprintf(sbuf,"%f",realans);
+				USART_Send_Str(USART1,"\r\n\r\n    ans = ");
+				USART_Send_Str(USART1,sbuf);
+				sprintf(sbuf,"%+f",imagans);
+				USART_Send_Str(USART1,sbuf);
+				USART_Send_Ch(USART1,'i');
+				
+				USART_Send_Str(USART1,"\r\n\r\n");
+				USART_Send_Str(USART1,COMMANDPROMPT);
+			}
 		}
 		GPIO_WriteBit(GPIOC,GPIO_Pin_8,(BitAction)(1-GPIO_ReadOutputDataBit(GPIOC,GPIO_Pin_8)));
 		_delay_ms(100);
@@ -87,6 +115,7 @@ int main(void)
 		_delay_ms(200);
 	}
 }
+
 
 
 

@@ -317,7 +317,7 @@ void Infix2Postfix(char *infix,char *postfix)
 					(*infix==CMD_SIND1)&&
 					(*(infix+1)==CMD_SIND2)&&
 					(*(infix+2)==CMD_SIND3)&&
-					(*(infix+2)==CMD_SIND4)
+					(*(infix+3)==CMD_SIND4)
 					)
 				{
 					infix+=3;
@@ -327,7 +327,7 @@ void Infix2Postfix(char *infix,char *postfix)
 					(*infix==CMD_ASIN1)&&
 					(*(infix+1)==CMD_ASIN2)&&
 					(*(infix+2)==CMD_ASIN3)&&
-					(*(infix+2)==CMD_ASIN4)
+					(*(infix+3)==CMD_ASIN4)
 					)
 				{
 					infix+=3;
@@ -337,7 +337,7 @@ void Infix2Postfix(char *infix,char *postfix)
 					(*infix==CMD_COSD1)&&
 					(*(infix+1)==CMD_COSD2)&&
 					(*(infix+2)==CMD_COSD3)&&
-					(*(infix+2)==CMD_COSD4)
+					(*(infix+3)==CMD_COSD4)
 					)
 				{
 					infix+=3;
@@ -347,7 +347,7 @@ void Infix2Postfix(char *infix,char *postfix)
 					(*infix==CMD_ACOS1)&&
 					(*(infix+1)==CMD_ACOS2)&&
 					(*(infix+2)==CMD_ACOS3)&&
-					(*(infix+2)==CMD_ACOS4)
+					(*(infix+3)==CMD_ACOS4)
 					)
 				{
 					infix+=3;
@@ -357,7 +357,7 @@ void Infix2Postfix(char *infix,char *postfix)
 					(*infix==CMD_TAND1)&&
 					(*(infix+1)==CMD_TAND2)&&
 					(*(infix+2)==CMD_TAND3)&&
-					(*(infix+2)==CMD_TAND4)
+					(*(infix+3)==CMD_TAND4)
 					)
 				{
 					infix+=3;
@@ -367,7 +367,7 @@ void Infix2Postfix(char *infix,char *postfix)
 					(*infix==CMD_ATAN1)&&
 					(*(infix+1)==CMD_ATAN2)&&
 					(*(infix+2)==CMD_ATAN3)&&
-					(*(infix+2)==CMD_ATAN4)
+					(*(infix+3)==CMD_ATAN4)
 					)
 				{
 					infix+=3;
@@ -377,7 +377,7 @@ void Infix2Postfix(char *infix,char *postfix)
 					(*infix==CMD_SQRT1)&&
 					(*(infix+1)==CMD_SQRT2)&&
 					(*(infix+2)==CMD_SQRT3)&&
-					(*(infix+2)==CMD_SQRT4)
+					(*(infix+3)==CMD_SQRT4)
 					)
 				{
 					infix+=3;
